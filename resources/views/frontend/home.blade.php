@@ -24,8 +24,6 @@
 
     </style>
 @endpush
-
-
 @section('content-frontend')
 @include('frontend.common.add_to_cart_modal')
     <!--main slider start-->
@@ -111,6 +109,72 @@
 	@endif
 	<!-- Campaign Slider End-->
 
+
+
+    <!--feature product start -->
+    <section class="product-tabs section-padding position-relative">
+        <div class="container-fluid">
+            <div class="section-title style-2 wow animate__animated animate__fadeIn">
+                <h3>Featured Products</h3>
+                <ul class="nav nav-tabs links" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="nav-tab-one" data-bs-toggle="tab" data-bs-target="#tab-one"
+                            type="button" role="tab" aria-controls="tab-one" aria-selected="true">All</button>
+                    </li>
+                    @foreach (get_categories() as $category)
+                        <li class="nav-item mb-1" role="presentation">
+                            <button class="nav-link" id="nav-tab-two_{{ $category->id }}" data-bs-toggle="tab"
+                                data-bs-target="#category{{ $category->id }}" type="button" role="tab"
+                                aria-selected="false">{{ $category->name_en }}</button>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+            <!--End nav-tabs-->
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="tab-one" role="tabpanel">
+                    <div class="row product-grid-4 gutters-5">
+                        @foreach ($products->take(10) as $product)
+                            @include('frontend.common.product_grid_view', ['product' => $product])
+                            <!--end product card-->
+                        @endforeach
+                    </div>
+                    <!--End product-grid-4-->
+                </div>
+                <!--En tab one-->
+                @foreach (get_categories() as $category)
+                    <div class="tab-pane fade" id="category{{ $category->id }}" role="tabpanel">
+                        @php
+                            $products = get_category_products($category->slug);
+                        @endphp
+                        <div class="row product-grid-4">
+                            @forelse($products->take(10) as $product)
+                                @include('frontend.common.product_grid_view')
+                            @empty
+                                @if (session()->get('language') == 'bangla')
+                                    <h5 class="text-danger">এখানে কোন পণ্য খুঁজে পাওয়া যায়নি!</h5>
+                                @else
+                                    <h5 class="text-danger">No products were found here!</h5>
+                                @endif
+                            @endforelse
+                        </div>
+                        <!--End product-grid-4-->
+                    </div>
+                @endforeach
+                <!--En tab two-->
+            </div>
+            
+             <div class="row">
+                <div class="col-12">
+                    <ul class="product_button product-view-more d-flex justify-content-center">
+                        <li><a href="{{ route('featured.product') }}">VIEW MORE</a></li>
+                    </ul>
+                </div>
+            </div>
+            <!--End tab-content-->
+        </div>
+    </section>
+    <!--feature product end -->
 
     <!--special collection start -->
     @if(count($home2_featured_categories) > 0)
@@ -238,71 +302,6 @@
         @endforeach
     @endif
     <!--special collection end -->
-
-    <!--feature product start -->
-    <section class="product-tabs section-padding position-relative">
-        <div class="container-fluid">
-            <div class="section-title style-2 wow animate__animated animate__fadeIn">
-                <h3>Featured Products</h3>
-                <ul class="nav nav-tabs links" id="myTab" role="tablist">
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="nav-tab-one" data-bs-toggle="tab" data-bs-target="#tab-one"
-                            type="button" role="tab" aria-controls="tab-one" aria-selected="true">All</button>
-                    </li>
-                    @foreach (get_categories() as $category)
-                        <li class="nav-item mb-1" role="presentation">
-                            <button class="nav-link" id="nav-tab-two_{{ $category->id }}" data-bs-toggle="tab"
-                                data-bs-target="#category{{ $category->id }}" type="button" role="tab"
-                                aria-selected="false">{{ $category->name_en }}</button>
-                        </li>
-                    @endforeach
-                </ul>
-            </div>
-            <!--End nav-tabs-->
-            <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade show active" id="tab-one" role="tabpanel">
-                    <div class="row product-grid-4 gutters-5">
-                        @foreach ($products->take(10) as $product)
-                            @include('frontend.common.product_grid_view', ['product' => $product])
-                            <!--end product card-->
-                        @endforeach
-                    </div>
-                    <!--End product-grid-4-->
-                </div>
-                <!--En tab one-->
-                @foreach (get_categories() as $category)
-                    <div class="tab-pane fade" id="category{{ $category->id }}" role="tabpanel">
-                        @php
-                            $products = get_category_products($category->slug);
-                        @endphp
-                        <div class="row product-grid-4">
-                            @forelse($products->take(10) as $product)
-                                @include('frontend.common.product_grid_view')
-                            @empty
-                                @if (session()->get('language') == 'bangla')
-                                    <h5 class="text-danger">এখানে কোন পণ্য খুঁজে পাওয়া যায়নি!</h5>
-                                @else
-                                    <h5 class="text-danger">No products were found here!</h5>
-                                @endif
-                            @endforelse
-                        </div>
-                        <!--End product-grid-4-->
-                    </div>
-                @endforeach
-                <!--En tab two-->
-            </div>
-            
-             <div class="row">
-                <div class="col-12">
-                    <ul class="product_button product-view-more d-flex justify-content-center">
-                        <li><a href="{{ route('featured.product') }}">VIEW MORE</a></li>
-                    </ul>
-                </div>
-            </div>
-            <!--End tab-content-->
-        </div>
-    </section>
-    <!--feature product end -->
 
 
     <!--special collection start -->

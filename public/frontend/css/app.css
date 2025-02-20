@@ -577,7 +577,7 @@ img {
 
 /*Footer Mid*/
 .footer-dark .dark-section {
-    background-color: #052B58;
+    background-color: #000;
 }
 
 .footer-dark .main-footer-custom p,
@@ -622,7 +622,7 @@ img {
 }
 
 .header-style-1 .header-top-ptb-1 {
-    background-color: #052B58;
+    background-color: #000;
     color: #2d2d2d;
 }
 
@@ -1794,7 +1794,7 @@ li.junayna__outlet a:hover {
 .home_btn i {
     font-size: 20px;
     display: block;
-    color: #052b58;
+    color: #000;
 }
 
 /*.header-menu.header-sticky.sticky::after {*/
